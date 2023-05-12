@@ -4,8 +4,12 @@ import BookCreate from "./components/BookCreate";
 function App() {
     const [books, setBooks] = useState([]);
 
-    const createBook = async (title) => {
-        console.log("Book title: ", title);
+    const createBook = (title) => {
+        const updatedBooks = [
+            ...books,
+            { id: Math.round(Math.random() * 9999), title },
+        ];
+        setBooks(updatedBooks);
     };
 
     return (
