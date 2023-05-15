@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
 import axios from "axios";
 
 function App() {
     const [books, setBooks] = useState([]);
+
+    const fetchBooks = async () => {
+        const response = await axios.get("http://localhost:3001/books");
+        setBooks(response.data);
+    };
+
+    useEffect(() => {
+        fetchBooks();
+    }, []); //second arg decide when the arrow function called, [] mean only rerender 1st time
 
     const deleteBook = (id) => {
         const updateBooks = books.filter((book) => {
@@ -22,10 +31,14 @@ function App() {
         setBooks(updatedBooks);
     };
 
-    const editBookById = (id, newTitle) => {
+    const editBookById = async (id, newTitle) => {
+        const response = await axios.put(`http://localhost:3001/books/${id}`, {
+            title: newTitle,
+        });
+
         const updateBooks = books.map((book) => {
             if (book.id === id) {
-                return { ...book, title: newTitle };
+                return { ...book, ...response.data }; //...response.data: take all the different data, put it in to the book obj
             }
             return book;
         });
