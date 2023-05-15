@@ -15,7 +15,8 @@ function App() {
         fetchBooks();
     }, []); //second arg decide when the arrow function called, [] mean only rerender 1st time
 
-    const deleteBook = (id) => {
+    const deleteBook = async (id) => {
+        await axios.delete(`http://localhost:3001/books/${id}`);
         const updateBooks = books.filter((book) => {
             return book.id !== id;
         });
