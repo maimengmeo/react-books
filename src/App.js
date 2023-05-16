@@ -8,7 +8,7 @@ function App() {
 
     useEffect(() => {
         fetchBooks();
-    }, []); //second arg decide when the arrow function called, [] mean only rerender 1st time
+    }, [fetchBooks]); //second arg decide when the arrow function called, [] mean only rerender 1st time
 
     return (
         <div className="app">
